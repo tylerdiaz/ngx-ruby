@@ -1,0 +1,21 @@
+version: "2"
+
+services:
+  nginx:
+    image: matsumotory/ngx-mruby
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx.conf:/usr/local/nginx/conf/nginx.conf
+      - ./src:/usr/local/nginx/src/
+    environment:
+      - TEST=value
+    depends_on:
+      - application
+
+  application:
+    image: erikap/ruby-sinatra
+    volumes:
+      - ./example_app:/usr/src/app
+    environment:
+      - MAIN_APP_FILE=main.rb
